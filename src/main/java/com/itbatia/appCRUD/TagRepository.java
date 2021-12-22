@@ -41,7 +41,7 @@ public class TagRepository {
     }
 
     void deleteById(int id) {
-        List<Tag> list = getAll().stream().peek(System.out::println).collect(Collectors.toList());
+        List<Tag> list = getAll().stream().filter(e -> e.getId() != id).collect(Collectors.toList());
         try (Writer writer = new FileWriter("src/main/resources/tags.json")) {
             writer.write(new Gson().toJson(list));
         } catch (IOException e) {
