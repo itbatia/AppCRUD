@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TagRepository {
-//    public Tag getById(int id) {
+    public Tag getById(int id) {
+
 //        List<Tag> list = getAll();
 //        List<Tag> list2 = list.stream().filter(e -> e.getId() == id).collect(Collectors.toList());
 //        Tag tag = list2.get(0);
-//        return getAll().get(0);
-//    }
+//        return tag;
+
+        return null;
+    }
 
     public List<Tag> getAll() {
         List<Tag> list = null;
@@ -40,7 +43,7 @@ public class TagRepository {
     }
 
     void deleteById(int id) {
-        List<Tag> list = getAll().stream().filter(e -> e.getId() != id).collect(Collectors.toList());
+        List<Tag> list = getAll().stream().peek(System.out::println).collect(Collectors.toList());
         try (Writer writer = new FileWriter("src/main/resources/tags.json")) {
             writer.write(new Gson().toJson(list));
         } catch (IOException e) {
