@@ -1,18 +1,15 @@
 package com.itbatia.appCRUD;
 
-import com.google.gson.Gson;
-
-import java.io.*;
-import java.util.List;
+import com.google.gson.Gson;   // Женя, мне кажется сам подход к реализации методов у меня неправильный.
+                               // Просто я что-то ещё не знаю. А что не знаю, сам не знаю :)
+import java.io.*;              // На нюансы не обращай внимание, это черновой вариант.
+import java.util.List;         // Почему ClassCastException в стриме? Проблема в методе getAll?
 import java.util.stream.Collectors;
 
 public class TagRepository {
     public Tag getById(int id) {
-
         List<Tag> list = getAll().stream().filter(e -> e.getId() == id).collect(Collectors.toList());
         return list.get(0);
-
-//        return null;
     }
 
     public List<Tag> getAll() {
