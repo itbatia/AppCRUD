@@ -9,12 +9,10 @@ import java.util.stream.Collectors;
 public class TagRepository {
     public Tag getById(int id) {
 
-//        List<Tag> list = getAll();
-//        List<Tag> list2 = list.stream().filter(e -> e.getId() == id).collect(Collectors.toList());
-//        Tag tag = list2.get(0);
-//        return tag;
+        List<Tag> list = getAll().stream().filter(e -> e.getId() == id).collect(Collectors.toList());
+        return list.get(0);
 
-        return null;
+//        return null;
     }
 
     public List<Tag> getAll() {
