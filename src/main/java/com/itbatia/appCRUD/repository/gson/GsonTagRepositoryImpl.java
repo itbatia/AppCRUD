@@ -1,10 +1,12 @@
 package com.itbatia.appCRUD.repository.gson;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.itbatia.appCRUD.model.Tag;
 import com.itbatia.appCRUD.repository.TagRepository;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class GsonTagRepositoryImpl implements TagRepository {
@@ -16,16 +18,30 @@ public class GsonTagRepositoryImpl implements TagRepository {
         return getAllTagsInternal().stream().filter(e -> e.getId().equals(id)).findFirst().orElse(null);
     }
 
+    public List<Tag> getAll() {
+        return getAllTagsInternal();
+    }
+
     private List<Tag> getAllTagsInternal() {
         try (Reader reader = new FileReader(FILE_PATH)) {
-            return gson.fromJson(reader, List.class);
+            if (reader.read() != -1) {
+                char[] charArray = new char[1024];
+                StringBuilder sb = new StringBuilder("[");
+                int i = reader.read(charArray);
+                while (i > 0) {
+                    sb.append(charArray, 0, i);
+                    i = reader.read(charArray);
+                }
+                String json = new String(sb);
+                Type targetClassType = new TypeToken<ArrayList<Tag>>() {
+                }.getType();
+                return gson.fromJson(json, targetClassType);
+            } else {
+                return new ArrayList<Tag>();
+            }
         } catch (IOException e) {
             return Collections.emptyList();
         }
-    }
-
-    public List<Tag> getAll() {
-        return getAllTagsInternal();
     }
 
     public Tag save(Tag t) {
@@ -51,6 +67,9 @@ public class GsonTagRepositoryImpl implements TagRepository {
     public void deleteById(Integer id) {
         List<Tag> currentTags = getAllTagsInternal();
         currentTags.removeIf(tag -> tag.getId().equals(id));
+        for (int i = 0; i < currentTags.size(); i++) {
+            currentTags.get(i).setId(i + 1);
+        }
         writeToFile(currentTags);
     }
 

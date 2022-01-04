@@ -4,7 +4,10 @@ public class Main {
     public static void main(String[] args) {
         TagView tagView = new TagView();
 //        tagView.mainMenu();
-        tagView.createTag();
+//        tagView.createTag();
+//        tagView.getTag();
+//        tagView.updateTag();
+        tagView.deleteTag();
     }
 }
 
