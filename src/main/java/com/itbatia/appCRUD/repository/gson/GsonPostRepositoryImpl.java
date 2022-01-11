@@ -7,6 +7,7 @@ import com.itbatia.appCRUD.repository.PostRepository;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.file.*;
 import java.util.*;
 
 public class GsonPostRepositoryImpl implements PostRepository {
@@ -20,22 +21,14 @@ public class GsonPostRepositoryImpl implements PostRepository {
     }
 
     private List<Post> getAllPostsInternal() {
-        try (Reader reader = new FileReader(FILE_PATH)) {
-            if (reader.read() != -1) {
-                char[] charArray = new char[1024];
-                StringBuilder sb = new StringBuilder("[");
-                int i = reader.read(charArray);
-                while (i > 0) {
-                    sb.append(charArray, 0, i);
-                    i = reader.read(charArray);
-                }
-                String json = new String(sb);
-                Type targetClassType = new TypeToken<ArrayList<Post>>() {
-                }.getType();
-                return gson.fromJson(json, targetClassType);
-            } else {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(FILE_PATH)));
+            if (content.length() == 0){
                 return new ArrayList<Post>();
             }
+            Type targetClassType = new TypeToken<ArrayList<Post>>() {
+            }.getType();
+            return gson.fromJson(content, targetClassType);
         } catch (IOException e) {
             return Collections.emptyList();
         }
@@ -62,6 +55,8 @@ public class GsonPostRepositoryImpl implements PostRepository {
         currentPosts.forEach(post -> {
             if (post.getId().equals(p.getId())) {
                 post.setContent(p.getContent());
+                post.setStatus(p.getStatus());
+                post.setTags(p.getTags());
             }
         });
         writeToFile(currentPosts);
@@ -72,9 +67,6 @@ public class GsonPostRepositoryImpl implements PostRepository {
     public void deleteById(Integer id) {
         List<Post> currentPosts = getAllPostsInternal();
         currentPosts.removeIf(post -> post.getId().equals(id));
-        for (int i = 0; i < currentPosts.size(); i++) {
-            currentPosts.get(i).setId(i + 1);
-        }
         writeToFile(currentPosts);
     }
 

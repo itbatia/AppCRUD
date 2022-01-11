@@ -7,6 +7,7 @@ import com.itbatia.appCRUD.repository.TagRepository;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.file.*;
 import java.util.*;
 
 public class GsonTagRepositoryImpl implements TagRepository {
@@ -23,22 +24,14 @@ public class GsonTagRepositoryImpl implements TagRepository {
     }
 
     private List<Tag> getAllTagsInternal() {
-        try (Reader reader = new FileReader(FILE_PATH)) {
-            if (reader.read() != -1) {
-                char[] charArray = new char[1024];
-                StringBuilder sb = new StringBuilder("[");
-                int i = reader.read(charArray);
-                while (i > 0) {
-                    sb.append(charArray, 0, i);
-                    i = reader.read(charArray);
-                }
-                String json = new String(sb);
-                Type targetClassType = new TypeToken<ArrayList<Tag>>() {
-                }.getType();
-                return gson.fromJson(json, targetClassType);
-            } else {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(FILE_PATH)));
+            if (content.length() == 0){
                 return new ArrayList<Tag>();
             }
+            Type targetClassType = new TypeToken<ArrayList<Tag>>() {
+            }.getType();
+            return gson.fromJson(content, targetClassType);
         } catch (IOException e) {
             return Collections.emptyList();
         }
@@ -67,9 +60,6 @@ public class GsonTagRepositoryImpl implements TagRepository {
     public void deleteById(Integer id) {
         List<Tag> currentTags = getAllTagsInternal();
         currentTags.removeIf(tag -> tag.getId().equals(id));
-        for (int i = 0; i < currentTags.size(); i++) {
-            currentTags.get(i).setId(i + 1);
-        }
         writeToFile(currentTags);
     }
 

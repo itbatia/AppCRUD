@@ -7,6 +7,7 @@ import com.itbatia.appCRUD.repository.WriterRepository;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.file.*;
 import java.util.*;
 
 public class GsonWriterRepositoryImpl implements WriterRepository {
@@ -20,22 +21,14 @@ public class GsonWriterRepositoryImpl implements WriterRepository {
     }
 
     private List<Writer> getAllWritersInternal() {
-        try (Reader reader = new FileReader(FILE_PATH)) {
-            if (reader.read() != -1) {
-                char[] charArray = new char[1024];
-                StringBuilder sb = new StringBuilder("[");
-                int i = reader.read(charArray);
-                while (i > 0) {
-                    sb.append(charArray, 0, i);
-                    i = reader.read(charArray);
-                }
-                String json = new String(sb);
-                Type targetClassType = new TypeToken<ArrayList<Writer>>() {
-                }.getType();
-                return gson.fromJson(json, targetClassType);
-            } else {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(FILE_PATH)));
+            if (content.length() == 0){
                 return new ArrayList<Writer>();
             }
+            Type targetClassType = new TypeToken<ArrayList<Writer>>() {
+            }.getType();
+            return gson.fromJson(content, targetClassType);
         } catch (IOException e) {
             return Collections.emptyList();
         }
@@ -62,8 +55,8 @@ public class GsonWriterRepositoryImpl implements WriterRepository {
     }
 
     private void writeToFile(List<Writer> writers) {
-        try (FileWriter writer = new FileWriter(FILE_PATH)) {
-            writer.write(gson.toJson(writers));
+        try (FileWriter fileWriter = new FileWriter(FILE_PATH)) {
+            fileWriter.write(gson.toJson(writers));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,6 +68,7 @@ public class GsonWriterRepositoryImpl implements WriterRepository {
         currentWriters.forEach(writer -> {
             if (writer.getId().equals(w.getId())) {
                 writer.setName(w.getName());
+                writer.setPosts(w.getPosts());
             }
         });
         writeToFile(currentWriters);
@@ -85,9 +79,6 @@ public class GsonWriterRepositoryImpl implements WriterRepository {
     public void deleteById(Integer id) {
         List<Writer> currentWriters = getAllWritersInternal();
         currentWriters.removeIf(writer -> writer.getId().equals(id));
-        for (int i = 0; i < currentWriters.size(); i++) {
-            currentWriters.get(i).setId(i + 1);
-        }
         writeToFile(currentWriters);
     }
 }
