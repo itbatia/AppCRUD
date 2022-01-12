@@ -1,1 +1,1 @@
-[]
+[{"id":1,"name":"Valera","posts":[{"id":8,"content":"This is a post text. ","tags":[{"id":25,"name":"label"}],"status":"ACTIVE"}]},{"id":2,"name":"Valera","posts":[{"id":9,"content":"2","tags":[],"status":"ACTIVE"}]},{"id":3,"name":"Valera","posts":[{"id":10,"content":"This is a post text. ","tags":[{"id":26,"name":"Label"}],"status":"ACTIVE"}]},{"id":4,"name":"Valera","posts":[]}]
