@@ -15,9 +15,10 @@ The user in the console has the ability to create, receive, edit and delete data
 ***:white_check_mark: controller*** - *handling requests from the user;*   
 ***:white_check_mark: view*** - *all the data needed to work with the console.*   
 
-The data store is text files: writers.json, posts.json, tags.json
-
+The data store is text files: writers.json, posts.json, tags.json.  
 To work with JSON, you need to use the Gson library.  
-To import dependencies - Maven
+To import dependencies - Maven.
 
-**Console example:**
+**Console example:**  
+  
+![App - 2](https://user-images.githubusercontent.com/77117639/149468925-9e8d44c1-dd09-45f9-8bfd-9d669c130745.jpg)
