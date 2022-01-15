@@ -1,11 +1,11 @@
-package com.itbatia.appCRUD;
+package com.itbatia.appCRUD.view;
 
 import com.itbatia.appCRUD.controller.*;
 import com.itbatia.appCRUD.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import static com.itbatia.appCRUD.utils.Messages.*;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WriterView {
@@ -14,7 +14,7 @@ public class WriterView {
     private final Scanner scanner = new Scanner(System.in);
 
     public void createWriter() {
-        System.out.println("Enter new writer name:");
+        System.out.println(ENTER_WRITER.getMessage());
         String writerName = scanner.nextLine();
         List<Post> posts = new ArrayList<>();
         System.out.println("The writer is created. Add post to him?\n1 - YES\n2 - NO");
@@ -46,13 +46,13 @@ public class WriterView {
     }
 
     public void updateWriter(Writer writer) {
-        System.out.println("\nWhat do you want to do?\n1 - Change name\n2 - Update post\n3 - Add post");
+        System.out.println(UPDATE_WRITER_SELECTION_1.getMessage());
         String userInput = scanner.nextLine();
         if (userInput.matches("[1-3]")) {
             while (userInput.matches("[1-3]")) {
                 switch (Integer.parseInt(userInput)) {
                     case 1:
-                        System.out.println("Enter new writer name:");
+                        System.out.println(ENTER_WRITER.getMessage());
                         writerController.updateWriterName(writer.getId(), scanner.nextLine());
                         break;
                     case 2:
@@ -81,11 +81,10 @@ public class WriterView {
                         writerController.updateAllWriterPosts(writer.getId(), posts);
                         break;
                 }
-                System.out.println("Done! Do you want to change anything else?\n1 - Change name" +
-                        "\n2 - Update post\n3 - Add post\nNO - For exit");
+                System.out.println(UPDATE_WRITER_SELECTION_2.getMessage());
                 userInput = scanner.nextLine();
             }
-            System.out.println("Changes applied!");
+            System.out.println(DONE.getMessage());
         }
     }
 
@@ -99,7 +98,7 @@ public class WriterView {
     }
 
     public void deleteWriter(Writer writer) {
-        System.out.println("Do you confirm the deletion?\n1 - Yes\n2 - No");
+        System.out.println(CONFIRMATION_1.getMessage());
         String userChoice = scanner.nextLine();
         if (userChoice.equals("1")) {
             System.out.printf("Writer %s successfully deleted!\n", writer.getName());
@@ -137,10 +136,10 @@ public class WriterView {
     }
 
     private Integer idFromUser() {
-        System.out.println("Enter writer ID:");
+        System.out.println(WRITER_ID.getMessage());
         String stringID = scanner.nextLine();
         if (!stringID.matches("\\d+")) {
-            System.out.println("Incorrect data.");
+            System.out.println(INCORRECT.getMessage());
             return 0;
         }
         int intID = Integer.parseInt(stringID);

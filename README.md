@@ -1,24 +1,30 @@
 # AppCRUD
+___
+
 **AppCrud** - console CRUD application.
 
 The user in the console has the ability to create, receive, edit and delete data.
 
-**AppCRUD has the following entities:**  
-*- Writer(id, name, List<Post> posts);*  
-*- Post(id, content, List<Tag> tags, PostStatus status);*   
-*- Tag(id, name);*  
+####AppCRUD has the following entities:  
+>*- Writer (id, name, List<Post> posts);*  
+*- Post (id, content, List<Tag> tags, PostStatus status);*   
+*- Tag (id, name);*  
 *- PostStatus (enum ACTIVE, DELETED).*
 
-**Layers:**   
-***:white_check_mark: model*** - *POJO classes;*   
-***:white_check_mark: repository*** - *classes that implement access to text files;*   
-***:white_check_mark: controller*** - *handling requests from the user;*   
-***:white_check_mark: view*** - *all the data needed to work with the console.*   
+####Layers:     
+> ***model*** - *POJO classes;*   
+***repository*** - *classes that implement access to text files;*   
+***controller*** - *handling requests from the user;*   
+***view*** - *all the data needed to work with the console.*   
 
 The data store is text files: writers.json, posts.json, tags.json.  
-To work with JSON, you need to use the Gson library.  
+The Gson library is used to work with JSON.  
 To import dependencies - Maven.
 
-**Console example:**  
-  
-![App - 2](https://user-images.githubusercontent.com/77117639/149468925-9e8d44c1-dd09-45f9-8bfd-9d669c130745.jpg)
+####Console example:
+___
+![screen](screen.jpg)
+___
+###Инструкции для запуска приложения:
+
+

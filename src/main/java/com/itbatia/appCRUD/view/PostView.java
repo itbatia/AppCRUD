@@ -1,11 +1,11 @@
-package com.itbatia.appCRUD;
+package com.itbatia.appCRUD.view;
 
 import com.itbatia.appCRUD.controller.PostController;
 import com.itbatia.appCRUD.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import static com.itbatia.appCRUD.utils.Messages.*;
+
+import java.util.*;
 
 public class PostView {
     private final PostController postController = new PostController();
@@ -13,7 +13,7 @@ public class PostView {
     private final Scanner scanner = new Scanner(System.in);
 
     public Post createPost() {
-        System.out.println("Enter new post content:");
+        System.out.println(ENTER_POST.getMessage());
         String postContent = scanner.nextLine();
         System.out.println("The post is created. Add tags to it?\n1 - YES\n2 - NO");
         List<Tag> tags = new ArrayList<>();
@@ -52,15 +52,13 @@ public class PostView {
         if (id != 0) {
             System.out.println("Found post:");
             postToString(postController.getPost(id));
-            System.out.println("What do you want to do?\n1 - Change content\n2 - Add new tag" +
-                    "\n3 - Delete tag\n4 - replace all tags\n5 - Update post status");
+            System.out.println(UPDATE_POST_SELECTION_1.getMessage());
             updatePost(id);
         }
     }
 
     public Post updatePostByPost(Post post) {
-        System.out.println("What do you want to do?\n1 - Change content\n2 - Add new tag" +
-                "\n3 - Delete tag\n4 - replace all tags\n5 - Update post status");
+        System.out.println(UPDATE_POST_SELECTION_1.getMessage());
         return updatePost(post.getId());
     }
 
@@ -70,7 +68,7 @@ public class PostView {
             while (userInput.matches("[1-5]")) {
                 switch (Integer.parseInt(userInput)) {
                     case 1:
-                        System.out.println("Enter new post content:");
+                        System.out.println(ENTER_POST.getMessage());
                         postController.updatePostContent(id, scanner.nextLine());
                         System.out.println("Content is changed!");
                         break;
@@ -103,29 +101,28 @@ public class PostView {
                             postController.updatePostStatus(id, PostStatus.DELETED);
                             System.out.println("Done!");
                         } else {
-                            System.out.println("Incorrect data.");
+                            System.out.println(INCORRECT_DATA.getMessage());
                         }
                         break;
                 }
-                System.out.println("What else do you want to do?\n1 - Change content\n2 - Add new tag" +
-                        "\n3 - Delete tag\n4 - replace all tags\n5 - Update post status\nNO - For exit");
+                System.out.println(UPDATE_POST_SELECTION_2.getMessage());
                 userInput = scanner.nextLine();
             }
-            System.out.println("Changes applied!");
-        } else System.out.println("Incorrect data.");
+            System.out.println(DONE.getMessage());
+        } else System.out.println(INCORRECT_DATA.getMessage());
         return postController.getPost(id);
     }
 
     public void deletePostById() {
         int id = idFromUser();
         if (id != 0) {
-            System.out.println("Found post. Do you confirm the deletion?\n1 - Yes\n2 - No");
+            System.out.println("Found post. " + CONFIRMATION_1.getMessage());
             deletePost(id);
         }
     }
 
     public void deletePostByPost(Post post) {
-        System.out.println("Are you sure?\n1 - Yes\n2 - No");
+        System.out.println(CONFIRMATION_2.getMessage());
         deletePost(post.getId());
     }
 
@@ -168,7 +165,7 @@ public class PostView {
         System.out.println("Enter post ID:");
         String stringID = scanner.nextLine();
         if (!stringID.matches("\\d+")) {
-            System.out.println("Incorrect data.");
+            System.out.println(INCORRECT_DATA.getMessage());
             return 0;
         }
         int intID = Integer.parseInt(stringID);

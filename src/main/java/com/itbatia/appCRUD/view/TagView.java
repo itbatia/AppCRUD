@@ -1,20 +1,22 @@
-package com.itbatia.appCRUD;
+package com.itbatia.appCRUD.view;
 
 import com.itbatia.appCRUD.controller.TagController;
 import com.itbatia.appCRUD.model.Tag;
 
-import java.util.List;
-import java.util.Scanner;
+import static com.itbatia.appCRUD.utils.Messages.*;
+
+import java.util.*;
 
 public class TagView {
     private final TagController tagController = new TagController();
     private final Scanner scanner = new Scanner(System.in);
 
     public Tag createTag() {
-        System.out.println("Enter new Tag name:");
+        System.out.println(ENTER_TAG.getMessage());
         String name = scanner.nextLine();
         Tag createdTag = tagController.createTag(name);
-        System.out.println("Created: " + createdTag.toString());
+        System.out.println("Created tag:");
+        tagToString(createdTag);
         return createdTag;
     }
 
@@ -29,7 +31,7 @@ public class TagView {
     public void updateTagById() {
         int id = idFromUser();
         if (id != 0) {
-            System.out.println("Found the tag with name: \"" + tagController.getTag(id).getName() + "\". Enter a new tag name:");
+            System.out.println("Found the tag with name: \"" + tagController.getTag(id).getName() + "\". " + ENTER_TAG.getMessage());
             String newName = scanner.nextLine();
             tagController.updateTag(id, newName);
             System.out.printf("Tag %s updated to \"%s\"\n", id, newName);
@@ -38,7 +40,7 @@ public class TagView {
 
     public void updateTagByTag(Tag tag) {
         if (tag != null) {
-            System.out.println("Enter a new Tag name:");
+            System.out.println(ENTER_TAG.getMessage());
             String newName = scanner.nextLine();
             tagController.updateTag(tag.getId(), newName);
             System.out.printf("Tag %s updated to \"%s\"\n", tag.getId(), newName);
@@ -49,10 +51,10 @@ public class TagView {
         int id = idFromUser();
         if (id != 0) {
             System.out.println("Found tag with name: \"" + tagController.getTag(id).getName()+ "\".");
-            System.out.println("Do you confirm the deletion?\n1 - Yes\n2 - No");
+            System.out.println(CONFIRMATION_1.getMessage());
             String userChoice = scanner.nextLine();
             if (userChoice.equals("1")) {
-                System.out.println("Tag deleted successfully!\n");
+                System.out.println(TAG_DELETED.getMessage());
                 tagController.deleteTag(id);
             } else {
                 System.out.println("Back to Tag menu.");
@@ -62,10 +64,10 @@ public class TagView {
 
     public void deleteTagByTag(Tag tag) {
         if (tag != null) {
-            System.out.println("Are you sure?\n1 - Yes\n2 - No");
+            System.out.println(CONFIRMATION_2.getMessage());
             String userChoice = scanner.nextLine();
             if (userChoice.equals("1")) {
-                System.out.println("Tag deleted successfully!");
+                System.out.println(TAG_DELETED.getMessage());
                 tagController.deleteTag(tag.getId());
             } else {
                 System.out.println("Back to Tag menu.");
@@ -79,6 +81,10 @@ public class TagView {
         return tags;
     }
 
+    private void tagToString(Tag tag){
+        System.out.printf("id: %-3d\t name: %s\n", tag.getId(), tag.getName());
+    }
+
     private void tagsToString(List<Tag> tags) {
         System.out.printf("\n%d tags available:\n", tags.size());
         for (Tag tag : tags) {
@@ -90,7 +96,7 @@ public class TagView {
         System.out.println("Enter Tag ID:");
         String stringID = scanner.nextLine();
         if (!stringID.matches("\\d+")) {
-            System.out.println("Incorrect data.");
+            System.out.println(INCORRECT_DATA.getMessage());
             return 0;
         }
         int intID = Integer.parseInt(stringID);
