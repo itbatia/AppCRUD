@@ -20,10 +20,9 @@ The data store is text files: writers.json, posts.json, tags.json.
 The Gson library is used to work with JSON.  
 To import dependencies - Maven.
 
-#### Console example:
-___
-![screen](screen.jpg)
-___
-#### Инструкции для запуска приложения:
+| Console example: |
+|:----:|
+| ![screen](screen.jpg) |
 
+#### Инструкции для запуска приложения:
 
