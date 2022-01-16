@@ -26,11 +26,15 @@ To import dependencies - Maven.
 
 ### Инструкции для запуска приложения:
 
-| № | Этапы выполнения ||
-|:----:|:----|:---- |
-| 1 | [Скопируйте код на свой ПК](https://github.com/itbatia/AppCRUD/archive/refs/heads/master.zip)||
-| 2 | Распакуйте архив. Укажите - куда извлечь файлы. В указанном месте появится папка AppCRUD-master. |![](screenshots/scr1.jpg)|
-| 3 | Зайдите в папку AppCRUD-master и в адресной строке пропишите: cmd. |![](screenshots/scr2.jpg)  |
-| 4 | Откроется командная строка, в которой необходимо прописать команду: mvn package. Результатом её выполнения будет примерно следующее:|![](screenshots/scr3.jpg)|
-| 5 | Затем пропишите команду: mvn exec:java -Dexec.mainClass="com.itbatia.appCRUD.Main". Программа запущена и готова к работе! |![](screenshots/scr4.jpg)  |
-
+| № | Этапы выполнения |
+|:----:|:----|
+| 1 | [Скопируйте код на свой ПК](https://github.com/itbatia/AppCRUD/archive/refs/heads/master.zip)|
+| 2 | Распакуйте архив. Укажите - куда извлечь файлы. В указанном месте появится папка AppCRUD-master. |
+|   | ![](screenshots/scr1.jpg)|
+| 3 | Зайдите в папку AppCRUD-master и в адресной строке пропишите: cmd |
+|   | ![](screenshots/scr2.jpg)|
+| 4 | Откроется командная строка, в которой необходимо прописать команду: mvn package. Результатом её выполнения будет примерно следующее:|
+|   | ![](screenshots/scr3.jpg)|
+| 5 | Затем пропишите команду: mvn exec:java -Dexec.mainClass="com.itbatia.appCRUD.Main" |
+|   | ![](screenshots/scr4.jpg)|
+|   | Программа запущена и готова к использованию! |
