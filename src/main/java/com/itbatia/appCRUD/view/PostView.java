@@ -170,7 +170,7 @@ public class PostView {
         }
         int intID = Integer.parseInt(stringID);
         if (postController.getPost(intID) == null) {
-            System.out.printf("Post number №%s doesn't exist\n", intID);
+            System.out.printf("Post number %s doesn't exist\n", intID);
             return 0;
         } else return intID;
     }

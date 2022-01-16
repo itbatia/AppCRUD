@@ -144,7 +144,7 @@ public class WriterView {
         }
         int intID = Integer.parseInt(stringID);
         if (writerController.getWriter(intID) == null) {
-            System.out.printf("Writer number №%s doesn't exist\n", intID);
+            System.out.printf("Writer number %s doesn't exist\n", intID);
             return 0;
         } else return intID;
     }

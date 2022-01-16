@@ -101,7 +101,7 @@ public class TagView {
         }
         int intID = Integer.parseInt(stringID);
         if (tagController.getTag(intID) == null) {
-            System.out.printf("Tag number №%s doesn't exist.\n", intID);
+            System.out.printf("Tag number %s doesn't exist.\n", intID);
             return 0;
         } else return intID;
     }
